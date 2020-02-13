@@ -1,0 +1,37 @@
+#!/bin/sh
+
+source /etc/profile
+
+LOG=/tmp/ifplug.${1}.log
+
+LOCKFILE=/var/lock/netlockfile.${1}
+
+UDHCP_PIDFILE=/var/run/udhcpc.${1}.pid
+
+CONF=/etc/network/interfaces.$1
+
+echo "$0: --> [ $1 ] [ $2 ]" >> $LOG
+
+pkill -9 -f "zcip $1"
+
+[ -f $UDHCP_PIDFILE ] && kill -9 `cat $UDHCP_PIDFILE`
+
+ip address flush dev $1
+
+ifdown $1
+
+ifconfig $1 down || true
+
+case $2 in
+up)
+    ifup $1
+    ;;
+down)
+    ;;
+*)
+    echo "$0: Error: unknown $1 state" >> $LOG
+    exit 1
+    ;;
+esac
+
+echo "$0: <--" >> $LOG
