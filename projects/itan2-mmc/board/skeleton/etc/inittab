@@ -26,10 +26,11 @@ null::sysinit:/bin/ln -sf /proc/self/fd/2 /dev/stderr
 # now run any rc scripts
 ::sysinit:/etc/init.d/rcS
 
-::sysinit:/usr/sbin/watchdog -t 10 -T 15 /dev/watchdog0
+#::sysinit:/usr/sbin/watchdog -t 10 -T 15 /dev/watchdog0
+
+::sysinit:/sbin/modprobe mali
 
 #::sysinit:/usr/sbin/mount_config.sh
-
 #::sysinit:/usr/sbin/mac_address.sh
 
 # Put a getty on the serial port
