@@ -22,12 +22,15 @@ print_blue_msg ()
 }
 
 usage () {
-    echo -n "$1 [options] [project name]"
-    echo -e "\t-c --- clean project building directories"
+    echo "$1 [options] [project name]"
+    echo -e "\t-C --cleanall     clean all project building directories"
+    echo -e "\t-c --clean        clean only kernel, busybox and u-boot building directories"
+    echo -e "\t-h --help         print usage and exit"
+
 }
 
 # parse command line into arguments
-res=`getopt ch $*`
+res=`getopt Cch $*`
 rc=$?
 # check result of parsing
 if [ $rc != 0 ]
@@ -42,18 +45,17 @@ set -- $res
 while [ $1 != -- ]
 do
     case $1 in
-    -c)	# clean
+    -C|--cleanall)
+	CLEAN=all;;
+    -c|--clean)
 	CLEAN=yes;;
-    -h)	# print help
+    -h|--help)
 	usage $0
 	exit 0;;
     esac
     shift   # next flag
 done
 shift
-
-# turn on exit-on-error mode
-set -e
 
 if [ -z "$1" ]; then
     if [ ! -d projects/$1 ]; then
@@ -99,8 +101,16 @@ do
 done
 
 if [ -n "$CLEAN" ]; then
-    print_blue_msg "Cleaning all ..."
-    rm -fr output
+    if [ "$CLEAN" = "all" ]; then
+	print_blue_msg "Cleaning all ..."
+	rm -fr output
+    else
+	print_blue_msg "Fast cleaning ..."
+	for p in linux uboot busybox
+	do
+	    rm -fr output/build/${p}-*
+	done
+    fi
     ./make.sh project_defconfig
 fi
 
