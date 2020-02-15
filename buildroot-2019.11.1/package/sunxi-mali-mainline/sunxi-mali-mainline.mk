@@ -15,6 +15,8 @@ SUNXI_MALI_MAINLINE_LICENSE_FILES = $(SUNXI_MALI_MAINLINE_EULA_NO_SPACES)
 
 SUNXI_MALI_MAINLINE_REV = $(call qstrip,$(BR2_PACKAGE_SUNXI_MALI_MAINLINE_REVISION))
 
+SUNXI_MALI_MAINLINE_DEPENDENCIES = patchelf
+
 ifeq ($(BR2_arm),y)
 SUNXI_MALI_MAINLINE_ARCH=arm
 else ifeq ($(BR2_aarch64),y)
@@ -32,12 +34,14 @@ define SUNXI_MALI_MAINLINE_INSTALL_STAGING_CMDS
 		$(STAGING_DIR)/usr/lib/pkgconfig/egl.pc
 	$(INSTALL) -D -m 0644 package/sunxi-mali-mainline/glesv2.pc \
 		$(STAGING_DIR)/usr/lib/pkgconfig/glesv2.pc
+	(cd $(STAGING_DIR)/usr/lib; patchelf --debug --set-soname libMali.so libMali.so)
 endef
 
 define SUNXI_MALI_MAINLINE_INSTALL_TARGET_CMDS
 	mkdir -p $(TARGET_DIR)/usr/lib
 	cp -rf $(@D)/$(SUNXI_MALI_MAINLINE_REV)/$(SUNXI_MALI_MAINLINE_ARCH)/fbdev/*.so* \
 		$(TARGET_DIR)/usr/lib/
+	(cd $(TARGET_DIR)/usr/lib; patchelf --debug --set-soname libMali.so libMali.so)
 endef
 
 define SUNXI_MALI_MAINLINE_FIXUP_LICENSE_FILE

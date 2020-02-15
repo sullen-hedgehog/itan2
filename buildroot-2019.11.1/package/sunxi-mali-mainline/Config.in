@@ -4,6 +4,7 @@ config BR2_PACKAGE_SUNXI_MALI_MAINLINE
 	depends on BR2_TOOLCHAIN_USES_GLIBC
 	select BR2_PACKAGE_HAS_LIBEGL
 	select BR2_PACKAGE_HAS_LIBGLES
+	select BR2_PACKAGE_HOST_PATCHELF
 	help
 	  Install userspace Allwinner OpenGL libraries.
 
