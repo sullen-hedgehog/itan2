@@ -58,7 +58,19 @@
 	};
 
 	chosen {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		
 		stdout-path = "serial0:115200n8";
+
+		framebuffer-lcd0 {
+			reg = <0x20000000 1536000>;
+			width = <800>;
+			stride = <3200>;
+			height = <480>;
+			format = "a8r8g8b8";
+			status = "okay";
+		};
 	};
 
 	hdmi-connector {
@@ -386,5 +398,10 @@
 };
 
 &be0 {
+	status = "okay";
+};
+
+&rtp {
+	allwinner,ts-attached = "true";
 	status = "okay";
 };

@@ -28,7 +28,7 @@ null::sysinit:/bin/ln -sf /proc/self/fd/2 /dev/stderr
 
 #::sysinit:/usr/sbin/watchdog -t 10 -T 15 /dev/watchdog0
 
-::sysinit:/sbin/modprobe mali
+#::sysinit:/sbin/modprobe mali
 
 #::sysinit:/usr/sbin/mount_config.sh
 #::sysinit:/usr/sbin/mac_address.sh

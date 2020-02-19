@@ -11,6 +11,8 @@ fi
 export PAGER='/bin/less'
 export EDITOR='/bin/nano'
 
+export TSLIB_TSDEVICE=/dev/input/event1
+
 # Source configuration files from /etc/profile.d
 for i in /etc/profile.d/*.sh ; do
 	if [ -r "$i" ]; then
