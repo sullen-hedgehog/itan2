@@ -1,0 +1,7 @@
+
+mode "800x480-50"
+  geometry 800 480 800 480 32
+  timings 40000 50 50 5 5 100 10
+  accel true
+  rgba 8/16,8/8,8/0,0/0
+endmode

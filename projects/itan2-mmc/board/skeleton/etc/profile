@@ -12,6 +12,7 @@ export PAGER='/bin/less'
 export EDITOR='/bin/nano'
 
 export TSLIB_TSDEVICE=/dev/input/event1
+export QT_QPA_PLATFORM=xcb
 
 # Source configuration files from /etc/profile.d
 for i in /etc/profile.d/*.sh ; do
