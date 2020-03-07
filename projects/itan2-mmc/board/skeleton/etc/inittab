@@ -36,6 +36,8 @@ null::sysinit:/bin/ln -sf /proc/self/fd/2 /dev/stderr
 # Put a getty on the serial port
 ttyS0::respawn:/sbin/getty -L -n -l /bin/sh ttyS0 0 linux # GENERIC_SERIAL
 
+::respawn:/usr/bin/ts_uinput.sh
+
 # Stuff to do for the 3-finger salute
 #::ctrlaltdel:/sbin/reboot
 
